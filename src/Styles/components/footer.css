@@ -1,0 +1,20 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.footer {
+  margin-top: auto;
+  background-color: #f8f9fa; /* Ejemplo de color de fondo */
+  padding: 10px; /* Ejemplo de padding */
+  text-align: center; /* Centrar el texto */
+  font-size: 14px; /* Tamaño de fuente */
+  color: #333; /* Color del texto */
+  border-top: 1px solid #ddd; /* Línea superior */
+}

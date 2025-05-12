@@ -1,0 +1,137 @@
+ferreteria-app/
+├── .gitignore
+├── index.html
+├── package.json
+├── public/
+│   └── vite.svg
+├── src/
+│   ├── App.jsx
+│   ├── main.jsx
+│   ├── assets/
+│   │   ├── images/
+│   │   │   ├── ferreteria.jpg
+│   │   │   ├── martillo.jpg
+│   │   │   ├── destornillador.jpg
+│   │   │   ├── llaveinglesa.jpg
+│   │   │   ├── teladroelectrico.jpg
+│   │   │   ├── sierramanual.jpg
+│   │   │   ├── cintametrica.jpg
+│   │   │   ├── alicate.jpg
+│   │   │   ├── nivelburbuja.jpg
+│   │   │   ├── llavetubo.jpg
+│   │   │   ├── cajaherramientas.jpg
+│   │   │   ├── cutter.jpg
+│   │   │   ├── pistolasilicona.jpg
+│   │   │   ├── brocha.jpg
+│   │   │   ├── lija.jpg
+│   │   │   ├── guantestrabajo.jpg
+│   │   │   ├── mascarilla.jpg
+│   │   │   ├── linterna.jpg
+│   │   │   ├── cerradura.jpg
+│   │   │   ├── tornillos.jpg
+│   │   │   ├── clavos.jpg
+│   │   │   ├── espatula.jpg
+│   │   │   ├── cerrucho.jpg
+│   │   │   ├── flexometro.jpg
+│   │   │   └── compresoraire.jpg
+│   │   └── miscelaneos/
+│   │       └── arbol.txt
+│   ├── components/
+│   │   ├── Button/
+│   │   │   └── Botones.jsx
+│   │   ├── CartWidget/
+│   │   │   └── CartWidget.jsx
+│   │   ├── Footer/
+│   │   │   ├── Footer.jsx
+│   │   │   └── footer.css
+│   │   ├── ItemDetailContainer/
+│   │   │   ├── ProductCard.jsx
+│   │   ├── ItemListContainer/
+│   │   │   ├── ProductList.jsx
+│   │   │   └── ProductCard.jsx
+│   │   ├── Navbar/
+│   │   │   ├── Navbar.jsx
+│   │   │   └── navbar.css
+│   │   └── ErrorBoundary.jsx
+│   ├── context/
+│   │   └── CartContext.jsx
+│   ├── data/
+│   │   └── productos.jsx
+│   ├── pages/
+│   │   ├── Cart.jsx
+│   │   ├── Contact.jsx
+│   │   ├── Home.jsx
+│   │   ├── ProductDetail.jsx
+│   │   └── Products.jsx
+│   ├── Styles/
+│   │   ├── components/
+│   │   │   ├── buttons.css
+│   │   │   ├── cart.css
+│   │   │   ├── contact.css
+│   │   │   ├── footer.css
+│   │   │   ├── home.css
+│   │   │   ├── navbar.css
+│   │   │   ├── productdetail.css
+│   │   │   └── products.css
+│   │   ├── global.css
+│   │   ├── layout.css
+│   │   ├── mixins.css
+│   │   ├── typography.css
+│   │   └── variables.css
+└── vite.config.js
+
+
+Explicación de la estructura:
+src/assets/images/:
+
+Aquí van las imágenes utilizadas en tu proyecto, como ferreteria.jpg.
+src/components/:
+
+Contiene los componentes reutilizables como Navbar, Footer y ErrorBoundary.
+Cada componente tiene su propio archivo .jsx y, opcionalmente, un archivo .css para sus estilos.
+src/context/:
+
+Aquí se encuentra el archivo CartContext.jsx, que contiene el contexto para manejar el carrito de compras.
+src/data/:
+
+Contiene datos estáticos como productos.jsx, que define los productos disponibles.
+src/pages/:
+
+Contiene las páginas principales de tu aplicación, como Home.jsx, Products.jsx, Contact.jsx, etc.
+Cada página puede tener su propio archivo .css para estilos específicos (por ejemplo, Home.css).
+src/styles/:
+
+Contiene estilos globales compartidos por toda la aplicación, como global.css.
+src/:
+
+App.jsx: Componente principal que define las rutas y estructura de la aplicación.
+main.jsx: Punto de entrada de la aplicación donde se renderiza el componente App.
+index.css: Archivo CSS global que puede contener estilos básicos.
+public/:
+
+Contiene archivos estáticos que no pasan por el proceso de compilación, como el logo de Vite (vite.svg).
+
+
+
+
+Relación entre los archivos:
+Home.jsx importa su estilo desde Home.css y la imagen desde assets/images/ferreteria.jpg.
+App.jsx importa y utiliza los componentes Navbar, Footer, y las páginas como Home.
+main.jsx importa App.jsx y global.css para aplicar estilos globales.
+Con esta estructura, tu proyecto estará bien organizado y será fácil de mantener.
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+src/
+├── styles/
+│   ├── global.css          # Estilos globales compartidos por toda la aplicación
+│   ├── variables.css       # Variables CSS (colores, fuentes, etc.)
+│   ├── mixins.css          # Mixins o utilidades reutilizables
+│   ├── layout.css          # Estilos generales de diseño (grid, flexbox, etc.)
+│   ├── typography.css      # Estilos relacionados con la tipografía
+│   └── components/         # Estilos específicos para componentes
+│       ├── buttons.css     # Estilos para botones
+│       ├── forms.css       # Estilos para formularios
+│       └── cards.css       # Estilos para tarjetas
