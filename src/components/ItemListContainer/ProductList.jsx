@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import ProductCard from '../ItemDetailContainer/ProductCard';
 
 // Componente ProductList para mostrar una lista de productos con un selector de categorías

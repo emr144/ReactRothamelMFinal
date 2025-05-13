@@ -1,22 +1,21 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useCart } from '../../context/CartContext.jsx';
 import Boton from '../Button/Botones';
+
 
 const ProductCard = ({ id, title, price, image, category }) => {
   const navigate = useNavigate();
-
-  // Validar props para evitar errores
-  if (!id || !title || !price || !image || !category) {
-    return <div>Información del producto no disponible</div>;
-  }
+  const { agregarAlCarrito } = useCart(); // Obtener la función para agregar productos
 
   const handleVer = () => {
     navigate(`/producto/${id}`);
   };
 
   const handleAgregar = () => {
+    const producto = { id, title, price, image, category, cantidad: 1 }; // Estructura del producto
+    agregarAlCarrito(producto); // Agregar al carrito global
     alert(`Producto agregado al carrito: ${title}`);
-    // Aquí luego puedes integrar lógica real de carrito
   };
 
   return (

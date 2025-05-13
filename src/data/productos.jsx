@@ -25,7 +25,7 @@ import compresorAire from '../assets/images/compresoraire.jpg';
 
 
 const productos = [
-    { id: 1, title: "Martillo", image: martillo, price: 150, description: "Martillo de acero con mango de madera, ideal para trabajos de carpintería.", category: "Herramientas Manuales" },
+    { id: 1, title: "Martillo", image: martillo, price: price, description: "Martillo de acero con mango de madera, ideal para trabajos de carpintería.", category: "Herramientas Manuales" },
     { id: 2, title: "Destornillador", image: destornillador, price: 200, description: "Destornillador de punta plana, perfecto para ajustes y reparaciones.", category: "Herramientas Manuales" },
     { id: 3, title: "Llave Inglesa", image: llaveInglesa, price: 300, description: "Llave ajustable para apretar o aflojar tuercas y tornillos.", category: "Herramientas Manuales" },
     { id: 4, title: "Taladro Eléctrico", image: taladro, price: 400, description: "Taladro eléctrico de alta potencia para perforar madera, metal y concreto.", category: "Herramientas Eléctricas" },

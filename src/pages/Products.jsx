@@ -2,22 +2,33 @@ import React, { useEffect, useState } from 'react';
 import ProductCard from '../components/ItemDetailContainer/ProductCard'; // Importa ProductCard
 import productosData from '../data/productos'; 
 import "../Styles/components/products.css";
+import {getDoc, getFirestore} from "firebase/firestore";
 
 const Products = () => {
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    // Simulamos carga asincrónica
-    const fetchProductos = () => {
-      setTimeout(() => {
-        setProductos(productosData);
-        setLoading(false);
-      }, 500); // pequeño retraso para simular carga
-    };
 
-    fetchProductos();
-  }, []);
+useEffect(() => {
+  const db = getFirestore()
+  const collectionRef = collection(db, "products")
+  getDoc(collectionRef).then((response)) => {
+    const responseMapped = response.docs.map((doc)=>({...doc.data(), id: doc.id}));  
+    setProducts(responseMapped)
+  })
+}, [categoryId])
+
+  // useEffect(() => {
+  //   // Simulamos carga asincrónica
+  //   const fetchProductos = () => {
+  //     setTimeout(() => {
+  //       setProductos(productosData);
+  //       setLoading(false);
+  //     }, 500); // pequeño retraso para simular carga
+  //   };
+  //
+  //   fetchProductos();
+  // }, []);
 
   if (loading) {
     return <p>Cargando productos...</p>;

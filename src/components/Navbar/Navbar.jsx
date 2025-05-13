@@ -4,6 +4,7 @@ import CartWidget from '../CartWidget/CartWidget';
 import logo from '../../assets/images/logoremov.png';
 import "../../Styles/components/navbar.css";
 
+
 function Navbar() {
   return (
     <nav className="navbar">

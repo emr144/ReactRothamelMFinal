@@ -1,7 +1,6 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Boton from '../Button/Botones';
-import { useCart } from '../context/CartContext'; 
+
 
 
 // Componente ProductCard que representa una tarjeta de producto
