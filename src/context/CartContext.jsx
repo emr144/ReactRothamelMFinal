@@ -1,49 +1,74 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useState, useContext } from 'react';
 
-const CartContext = createContext();
+export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [carrito, setCarrito] = useState([]);
+    const [cart, setCart] = useState([]);
 
-  // 🔹 Agregar producto al carrito (+1 unidad o agregar nuevo)
-  const agregarUnidad = (producto) => {
-    if (!producto || !producto.id) {
-      console.error("Error: Producto inválido en agregarUnidad", producto);
-      return;
-    }
+    const addToCart = (item, quantity = 1) => {
+        setCart(prevCart => {
+            const existingItem = prevCart.find(i => i.id === item.id);
+            if (existingItem) {
+                return prevCart.map(i =>
+                    i.id === item.id ? { ...i, quantity: i.quantity + quantity } : i
+                );
+            }
+            return [...prevCart, { ...item, quantity }];
+        });
+    };
 
-    setCarrito((prevCarrito) => {
-      const productoExistente = prevCarrito.find((item) => item.id === producto.id);
+    const removeFromCart = (id) => {
+        setCart(prevCart => prevCart.filter(item => item.id !== id));
+    };
 
-      return productoExistente
-        ? prevCarrito.map((item) =>
-            item.id === producto.id
-              ? { ...item, cantidad: item.cantidad + 1 }
-              : item
-          )
-        : [...prevCarrito, { ...producto, cantidad: 1 }];
-    });
-  };
+    const clearCart = () => {
+        setCart([]);
+    };
 
-  // 🔹 Reducir cantidad (-1 unidad, pero sin eliminar completamente)
-  const reducirUnidad = (id) => {
-    setCarrito((prevCarrito) =>
-      prevCarrito.map((item) =>
-        item.id === id && item.cantidad > 1 ? { ...item, cantidad: item.cantidad - 1 } : item
-      )
+    const getTotalItems = () => {
+        return cart.reduce((acc, item) => acc + item.quantity, 0);
+    };
+
+    const getTotalPrice = () => {
+        return cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    };
+
+    // Funciones para sumar/restar unidades
+    const incrementarCantidad = (id) => {
+        setCart(prevCart =>
+            prevCart.map(item =>
+                item.id === id ? { ...item, quantity: item.quantity + 1 } : item
+            )
+        );
+    };
+
+    const decrementarCantidad = (id) => {
+        setCart(prevCart =>
+            prevCart.map(item =>
+                item.id === id && item.quantity > 1
+                    ? { ...item, quantity: item.quantity - 1 }
+                    : item
+            )
+        );
+    };
+
+    return (
+        <CartContext.Provider
+            value={{
+                cart,
+                addToCart,
+                removeFromCart,
+                clearCart,
+                getTotalItems,
+                getTotalPrice,
+                incrementarCantidad,
+                decrementarCantidad,
+            }}
+        >
+            {children}
+        </CartContext.Provider>
     );
-  };
-
-  // 🔹 Eliminar producto completamente (botón "X")
-  const eliminarProducto = (id) => {
-    setCarrito((prevCarrito) => prevCarrito.filter((item) => item.id !== id));
-  };
-
-  return (
-    <CartContext.Provider value={{ carrito, agregarUnidad, reducirUnidad, eliminarProducto }}>
-      {children}
-    </CartContext.Provider>
-  );
 };
 
+// Hook personalizado para usar el contexto
 export const useCart = () => useContext(CartContext);

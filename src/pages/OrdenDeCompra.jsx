@@ -1,21 +1,41 @@
-import React, { useState } from "react";
+import React from "react";
+import { useState } from "react";
 import { useCart } from "../context/CartContext";
 import "../Styles/components/cart.css";
+import { db } from "../data/configFirebase";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
 
 const OrdenDeCompra = () => {
-  const { carrito } = useCart();
+  const { cart } = useCart(); // Cambiado de 'carrito' a 'cart'
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [enviado, setEnviado] = useState(false);
 
-  const total = carrito.reduce(
-    (acc, item) => acc + (item.price || 0) * (item.cantidad || 0),
-    0
-  );
+  // Asegúrate de que cart siempre sea un array
+  const total = Array.isArray(cart)
+    ? cart.reduce((acc, item) => acc + (item.price || 0) * (item.quantity || 0), 0)
+    : 0;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí podrías enviar la orden a Firebase o mostrar un mensaje de éxito
+
+    // Crear el objeto de la orden
+    const orden = {
+      nombre,
+      email,
+      items: cart.map(item => ({
+        id: item.id,
+        title: item.title,
+        cantidad: item.quantity,
+        price: item.price
+      })),
+      total,
+      fecha: Timestamp.now()
+    };
+
+    // Guardar en Firestore
+    await addDoc(collection(db, "ordenes"), orden);
+
     setEnviado(true);
   };
 
@@ -33,9 +53,9 @@ const OrdenDeCompra = () => {
       <h2>Orden de Compra</h2>
       <h3>Resumen del carrito:</h3>
       <ul>
-        {carrito.map((item) => (
+        {Array.isArray(cart) && cart.map((item) => (
           <li key={item.id}>
-            {item.title} x {item.cantidad} = ${item.price * item.cantidad}
+            {item.title} x {item.quantity} = ${item.price * item.quantity}
           </li>
         ))}
       </ul>

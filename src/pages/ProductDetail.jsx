@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../data/configFirebase";
-import "../Styles/components/productdetail.css"; 
-import Boton from "../components/Button/Botones"; 
-import { useCart } from "../context/CartContext"; // 🔹 Cambio importante
+import "../Styles/components/productdetail.css";
+import Boton from "../components/Button/Botones";
+import { useCart } from "../context/CartContext";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [producto, setProducto] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-  const { agregarUnidad } = useCart(); // 🔹 Obtén la función del contexto
+  const { cart, addToCart, incrementarCantidad } = useCart();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -43,17 +43,19 @@ const ProductDetail = () => {
   }
 
   const handleAgregar = () => {
-    const productoAgregado = { 
-      id: producto.id, 
-      title: producto.title, 
-      price: producto.price, 
-      image: producto.image, 
-      category: producto.category, 
-      cantidad: 1 
-    };
-
-    agregarUnidad(productoAgregado);
-    alert(`Producto agregado al carrito: ${producto.title}`);
+    const existe = cart.find(item => item.id === producto.id);
+    if (existe) {
+      incrementarCantidad(producto.id);
+    } else {
+      addToCart({
+        id: producto.id,
+        title: producto.title,
+        price: producto.price,
+        image: producto.image,
+        category: producto.category
+      }, 1);
+    }
+  
   };
 
   return (
@@ -63,7 +65,6 @@ const ProductDetail = () => {
       <p>{producto.description}</p>
       <p><strong>Categoría:</strong> {producto.category}</p>
       <p><strong>Precio:</strong> ${producto.price}</p>
-      
       <div className="button-group">
         <Boton text="Volver" onClick={() => navigate("/productos")} className="btn-volver" />
         <Boton text="Agregar al carrito" onClick={handleAgregar} className="btn-agregar" />
