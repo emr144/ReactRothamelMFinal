@@ -6,7 +6,7 @@ import Boton from '../Button/Botones';
 
 const ProductCard = ({ id, title, price, image, category }) => {
   const navigate = useNavigate();
-  const { agregarAlCarrito } = useCart(); // Obtener la función para agregar productos
+  const { agregarUnidad } = useCart(); // Obtener la función para agregar productos
 
   const handleVer = () => {
     navigate(`/producto/${id}`);
@@ -14,7 +14,7 @@ const ProductCard = ({ id, title, price, image, category }) => {
 
   const handleAgregar = () => {
     const producto = { id, title, price, image, category, cantidad: 1 }; // Estructura del producto
-    agregarAlCarrito(producto); // Agregar al carrito global
+    agregarUnidad(producto); // Agregar al carrito global
     alert(`Producto agregado al carrito: ${title}`);
   };
 

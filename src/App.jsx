@@ -1,12 +1,11 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import {createFirebaseApp} from "./data/configFirebase";
-// Componentes principales
 
+// Componentes principales
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import ErrorBoundary from "./components/ErrorBoundary";
-import ProductList from "./components/ItemListContainer/ProductList";
+
 // Páginas
 import Home from "./pages/Home";
 import Products from "./pages/Products";
@@ -15,8 +14,6 @@ import Cart from "./pages/Cart";
 import ProductDetail from "./pages/ProductDetail";
 
 function App() {
-  createFirebaseApp()
-  // Inicializa Firebase
   return (
     <ErrorBoundary>
       <Navbar />     

@@ -1,39 +1,46 @@
-import React from 'react';
-import { createContext, useContext, useState, useCallback } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
 
-  const agregarAlCarrito = useCallback((producto) => {
+  // 🔹 Agregar producto al carrito (+1 unidad o agregar nuevo)
+  const agregarUnidad = (producto) => {
+    if (!producto || !producto.id) {
+      console.error("Error: Producto inválido en agregarUnidad", producto);
+      return;
+    }
+
     setCarrito((prevCarrito) => {
-      const existeProducto = prevCarrito.find((item) => item.id === producto.id);
-      return existeProducto
+      const productoExistente = prevCarrito.find((item) => item.id === producto.id);
+
+      return productoExistente
         ? prevCarrito.map((item) =>
-            item.id === producto.id ? { ...item, cantidad: item.cantidad + 1 } : item
+            item.id === producto.id
+              ? { ...item, cantidad: item.cantidad + 1 }
+              : item
           )
         : [...prevCarrito, { ...producto, cantidad: 1 }];
     });
-  }, []);
+  };
 
-  const eliminarProducto = (id) => {
+  // 🔹 Reducir cantidad (-1 unidad, pero sin eliminar completamente)
+  const reducirUnidad = (id) => {
     setCarrito((prevCarrito) =>
-      prevCarrito.reduce((nuevoCarrito, item) => {
-        if (item.id === id) {
-          if (item.cantidad > 1) {
-            nuevoCarrito.push({ ...item, cantidad: item.cantidad - 1 });
-          }
-        } else {
-          nuevoCarrito.push(item);
-        }
-        return nuevoCarrito;
-      }, [])
+      prevCarrito.map((item) =>
+        item.id === id && item.cantidad > 1 ? { ...item, cantidad: item.cantidad - 1 } : item
+      )
     );
   };
 
+  // 🔹 Eliminar producto completamente (botón "X")
+  const eliminarProducto = (id) => {
+    setCarrito((prevCarrito) => prevCarrito.filter((item) => item.id !== id));
+  };
+
   return (
-    <CartContext.Provider value={{ carrito, setCarrito, agregarAlCarrito, eliminarProducto }}>
+    <CartContext.Provider value={{ carrito, agregarUnidad, reducirUnidad, eliminarProducto }}>
       {children}
     </CartContext.Provider>
   );

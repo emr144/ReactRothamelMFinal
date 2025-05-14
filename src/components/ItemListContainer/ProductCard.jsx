@@ -1,24 +1,21 @@
-import { useNavigate } from 'react-router-dom';
-import Boton from '../Button/Botones';
-
-
+import { useNavigate } from "react-router-dom";
+import { useCart } from "../../context/CartContext.jsx";
+import Boton from "../Button/Botones";
 
 // Componente ProductCard que representa una tarjeta de producto
 const ProductCard = ({ id, title, price, image, category, description }) => {
   const navigate = useNavigate();
-  const { agregarAlCarrito } = useCart();
-    console.log("¿Existe agregarAlCarrito?", agregarAlCarrito);
+  const { agregarUnidad } = useCart();
 
+  // Función para redirigir al detalle del producto
   const handleVer = () => {
     navigate(`/producto/${id}`);
   };
 
   // Función para agregar el producto al carrito
   const handleAgregar = () => {
-    console.log("¡Click detectado en Agregar!");
-    agregarAlCarrito({ id, title, price, image, category, description });
+    agregarUnidad({ id, title, price, image, category, description });
   };
-  console.log("handleAgregar definido:", handleAgregar);
 
   return (
     <div className="product-card">
@@ -34,7 +31,3 @@ const ProductCard = ({ id, title, price, image, category, description }) => {
 };
 
 export default ProductCard;
-
-
-   
-

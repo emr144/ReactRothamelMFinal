@@ -5,20 +5,15 @@ import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const { carrito, setCarrito } = useCart();
+  const { carrito, agregarUnidad, reducirUnidad, eliminarProducto } = useCart();
   const navigate = useNavigate();
 
-  // 🗑️ Función para eliminar productos del carrito
-  const eliminarProducto = (id) => {
-    setCarrito((prevCarrito) => prevCarrito.filter((item) => item.id !== id));
-  };
-
-  // 📦 Calcular el total general del carrito
+  // 🔹 Calcular el total general del carrito evitando NaN
   const totalCarrito = useMemo(() => {
-    return carrito.reduce((total, item) => total + item.price * item.cantidad, 0);
+    return carrito.reduce((total, item) => total + (item.price || 0) * (item.cantidad || 0), 0);
   }, [carrito]);
 
-  // Navegar a la página de medios de pago
+  // 🔹 Navegar a la página de medios de pago
   const irAMediosDePago = () => {
     navigate("/medios-de-pago");
   };
@@ -44,9 +39,13 @@ const Cart = () => {
             {carrito.map((item) => (
               <tr key={item.id}>
                 <td>{item.title}</td>
-                <td>{item.cantidad}</td>
-                <td>${item.price}</td>
-                <td>${item.cantidad * item.price}</td>
+                <td>
+                  <button onClick={() => reducirUnidad(item.id)}>-</button>
+                  <span>{item.cantidad}</span>
+                  <button onClick={() => agregarUnidad(item)}>+</button> {/* 🔹 Enviar el producto completo */}
+                </td>
+                <td>${item.price || 0}</td>
+                <td>${(item.cantidad || 0) * (item.price || 0)}</td>
                 <td>
                   <button onClick={() => eliminarProducto(item.id)}>Eliminar</button>
                 </td>

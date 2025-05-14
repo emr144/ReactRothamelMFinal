@@ -1,34 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import ProductCard from '../components/ItemDetailContainer/ProductCard'; // Importa ProductCard
-import productosData from '../data/productos'; 
+import React, { useEffect, useState } from "react";
+import ProductCard from "../components/ItemDetailContainer/ProductCard";
 import "../Styles/components/products.css";
-import {getDoc, getFirestore} from "firebase/firestore";
+
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../data/configFirebase";
 
 const Products = () => {
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "products"));
+        const productList = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setProductos(productList);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error obteniendo productos:", error);
+      }
+    };
 
-useEffect(() => {
-  const db = getFirestore()
-  const collectionRef = collection(db, "products")
-  getDoc(collectionRef).then((response)) => {
-    const responseMapped = response.docs.map((doc)=>({...doc.data(), id: doc.id}));  
-    setProducts(responseMapped)
-  })
-}, [categoryId])
-
-  // useEffect(() => {
-  //   // Simulamos carga asincrónica
-  //   const fetchProductos = () => {
-  //     setTimeout(() => {
-  //       setProductos(productosData);
-  //       setLoading(false);
-  //     }, 500); // pequeño retraso para simular carga
-  //   };
-  //
-  //   fetchProductos();
-  // }, []);
+    fetchProducts();
+  }, []);
 
   if (loading) {
     return <p>Cargando productos...</p>;
@@ -38,7 +35,7 @@ useEffect(() => {
     <div className="products-page">
       <h1>Productos disponibles</h1>
       <div className="product-list">
-        {productos.map((producto) => (
+        {productos.map(producto => (
           <ProductCard
             key={producto.id}
             id={producto.id}
