@@ -42,7 +42,7 @@ const Cart = () => {
                 <td>
                   <button onClick={() => reducirUnidad(item.id)}>-</button>
                   <span>{item.cantidad}</span>
-                  <button onClick={() => agregarUnidad(item)}>+</button> {/* 🔹 Enviar el producto completo */}
+                  <button onClick={() => agregarUnidad(item)}>+</button>
                 </td>
                 <td>${item.price || 0}</td>
                 <td>${(item.cantidad || 0) * (item.price || 0)}</td>
@@ -58,8 +58,11 @@ const Cart = () => {
       {carrito.length > 0 && (
         <>
           <h3>Total: ${totalCarrito}</h3>
-          <button className="pago-btn" onClick={irAMediosDePago}>
-            Ir a medios de pago
+          <button
+            className="pago-btn"
+            onClick={() => navigate("/Orden")}
+          >
+            Ordenar pedido
           </button>
         </>
       )}

@@ -12,6 +12,8 @@ import Products from "./pages/Products";
 import Contact from "./pages/Contact";
 import Cart from "./pages/Cart";
 import ProductDetail from "./pages/ProductDetail";
+import OrdenDeCompra from "./pages/OrdenDeCompra";
+
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
         <Route path="/contacto" element={<Contact />} />
         <Route path="/carrito" element={<Cart />} />
         <Route path="/producto/:id" element={<ProductDetail />} />
+        <Route path="/orden" element={<OrdenDeCompra />} />
       </Routes>
       <Footer />
     </ErrorBoundary>

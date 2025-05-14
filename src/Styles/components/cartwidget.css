@@ -1,0 +1,17 @@
+.cart-widget {
+    display: flex;
+    align-items: center;
+    background: #e3f2fd; /* celeste */
+    border-radius: 50%;  /* burbuja perfectamente redonda */
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.10);
+    padding: 8px; /* padding reducido */
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    background: #bbdefb; /* celeste más azulado */
+    position: relative;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    border: 2px solid #90caf9;
+}
