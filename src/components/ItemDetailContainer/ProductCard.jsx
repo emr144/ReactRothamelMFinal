@@ -2,6 +2,7 @@ import React from "react";
 import { useCart } from "../../context/CartContext";
 import { Link } from "react-router-dom";
 import Boton from '../Button/Botones';
+import Swal from 'sweetalert2';
 
 const ProductCard = ({ id, title, price, image, category }) => {
   const { cart, addToCart, incrementarCantidad } = useCart();
@@ -13,6 +14,12 @@ const ProductCard = ({ id, title, price, image, category }) => {
     } else {
       addToCart({ id, title, price, image, category }, 1);
     }
+    Swal.fire({
+      icon: 'success',
+      title: '¡Producto agregado al carrito!',
+      showConfirmButton: false,
+      timer: 1200
+    });
   };
 
   return (

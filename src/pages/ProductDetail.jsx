@@ -5,6 +5,7 @@ import { db } from "../data/configFirebase";
 import "../Styles/components/productdetail.css";
 import Boton from "../components/Button/Botones";
 import { useCart } from "../context/CartContext";
+import Swal from 'sweetalert2';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -55,6 +56,12 @@ const ProductDetail = () => {
         category: producto.category
       }, 1);
     }
+    Swal.fire({
+      icon: 'success',
+      title: '¡Producto agregado al carrito!',
+      showConfirmButton: false,
+      timer: 1200
+    });
   
   };
 

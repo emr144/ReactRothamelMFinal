@@ -1,17 +1,16 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useCart } from "../context/CartContext";
 import "../Styles/components/cart.css";
 import { db } from "../data/configFirebase";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 
 const OrdenDeCompra = () => {
-  const { cart } = useCart(); // Cambiado de 'carrito' a 'cart'
+  const { cart, clearCart } = useCart(); // Incluye clearCart
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [enviado, setEnviado] = useState(false);
 
-  // Asegúrate de que cart siempre sea un array
+  // Calcular el total del carrito
   const total = Array.isArray(cart)
     ? cart.reduce((acc, item) => acc + (item.price || 0) * (item.quantity || 0), 0)
     : 0;
@@ -37,6 +36,7 @@ const OrdenDeCompra = () => {
     await addDoc(collection(db, "ordenes"), orden);
 
     setEnviado(true);
+    clearCart(); // Vacía el carrito después de la compra
   };
 
   if (enviado) {

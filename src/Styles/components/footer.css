@@ -11,7 +11,8 @@ html, body {
 
 .footer {
   margin-top: auto;
-  background-color: #f8f9fa; /* Ejemplo de color de fondo */
+  background: linear-gradient(to right,#9fb8d0, #2c3e50d2 );
+
   padding: 10px; /* Ejemplo de padding */
   text-align: center; /* Centrar el texto */
   font-size: 14px; /* Tamaño de fuente */
